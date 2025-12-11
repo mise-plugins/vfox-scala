@@ -3,7 +3,7 @@ local util = {}
 
 util.SEARCH_URL = "https://www.scala-lang.org/download/all.html"
 util.SCALA3_DOWNLOAD_URL = "https://github.com/scala/scala3/releases/download/%s/scala3-%s.%s"
-util.SCALA2_DOWNLOAD_URL_2104_UP = "https://downloads.lightbend.com/scala/%s/scala-%s.%s"
+util.SCALA2_DOWNLOAD_URL_2104_UP = "https://scala-lang.org/files/archive/scala-%s.%s"
 util.SCALA2_DOWNLOAD_URL_250_UP = "https://scala-lang.org/files/archive/scala-%s.%s"
 
 function util:compare_versions(v1o, v2o)
@@ -51,7 +51,7 @@ function util:getDownloadUrl(version)
         end
         downloadUrl = util.SCALA2_DOWNLOAD_URL_250_UP:format(version,suffixType)
     elseif util:compare_versions({version="3.0.0"},{version=version}) then
-        downloadUrl = util.SCALA2_DOWNLOAD_URL_2104_UP:format(version, version,suffixType)
+        downloadUrl = util.SCALA2_DOWNLOAD_URL_2104_UP:format(version, suffixType)
     else
         downloadUrl = util.SCALA3_DOWNLOAD_URL:format(version, version,suffixType)
     end
