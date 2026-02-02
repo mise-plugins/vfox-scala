@@ -13,7 +13,6 @@ PLUGIN.license = "Apache 2.0"
 --- Plugin description
 PLUGIN.description = "Scala plugin, https://www.scala-lang.org/"
 
-
 --- !!! OPTIONAL !!!
 --[[
 NOTE:
@@ -35,5 +34,4 @@ NOTE:
  --]]
 PLUGIN.manifestUrl = "https://github.com/version-fox/vfox-scala/releases/download/manifest/manifest.json"
 -- Some things that need user to be attention!
-PLUGIN.notes = {
-}
+PLUGIN.notes = {}

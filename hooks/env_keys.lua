@@ -9,12 +9,11 @@ function PLUGIN:EnvKeys(ctx)
     return {
         {
             key = "SCALA_HOME",
-            value = path
+            value = path,
         },
         {
             key = "PATH",
-            value = path .. "/bin"
-        }
+            value = path .. "/bin",
+        },
     }
-
 end

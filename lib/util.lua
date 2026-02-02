@@ -1,4 +1,3 @@
-
 local util = {}
 
 util.SEARCH_URL = "https://www.scala-lang.org/download/all.html"
@@ -38,26 +37,31 @@ function util:getDownloadUrl(version)
     if RUNTIME.osType == "windows" then
         suffixType = "zip"
     else
-        if util:compare_versions({version="2.7.1"},{version=version}) or  util:compare_versions({version=version},{version="3.0.0"})then
+        if
+            util:compare_versions({ version = "2.7.1" }, { version = version })
+            or util:compare_versions({ version = version }, { version = "3.0.0" })
+        then
             suffixType = "tar.gz"
         else
             suffixType = "tgz"
         end
     end
 
-    if util:compare_versions({version=version},{version="2.5.0"}) and util:compare_versions({version="2.10.4"},{version=version}) then
-        if util:compare_versions({version="2.7.0"},{version=version}) then
+    if
+        util:compare_versions({ version = version }, { version = "2.5.0" })
+        and util:compare_versions({ version = "2.10.4" }, { version = version })
+    then
+        if util:compare_versions({ version = "2.7.0" }, { version = version }) then
             version = version:gsub("%.final", "-final")
         end
-        downloadUrl = util.SCALA2_DOWNLOAD_URL_250_UP:format(version,suffixType)
-    elseif util:compare_versions({version="3.0.0"},{version=version}) then
+        downloadUrl = util.SCALA2_DOWNLOAD_URL_250_UP:format(version, suffixType)
+    elseif util:compare_versions({ version = "3.0.0" }, { version = version }) then
         downloadUrl = util.SCALA2_DOWNLOAD_URL_2104_UP:format(version, suffixType)
     else
-        downloadUrl = util.SCALA3_DOWNLOAD_URL:format(version, version,suffixType)
+        downloadUrl = util.SCALA3_DOWNLOAD_URL:format(version, version, suffixType)
     end
 
     return downloadUrl
-
 end
 
 return util
