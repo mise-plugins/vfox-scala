@@ -18,6 +18,7 @@ function util:version_weight(version)
         { pattern = "([^%a])a%.?([^%a]?)", repl = "%1.20.%2" },
         { pattern = "([^%a])beta%.?([^%a]?)", repl = "%1.30.%2" },
         { pattern = "([^%a])b%.?([^%a]?)", repl = "%1.30.%2" },
+        { pattern = "([^%a])[Mm]%.?([^%a]?)", repl = "%1.35.%2" },
         { pattern = "([^%a])rc%.?([^%a]?)", repl = "%1.40.%2" },
         { pattern = "([^%a])RC%.?([^%a]?)", repl = "%1.40.%2" },
         { pattern = "([^%a])stable%.?([^%a]?)", repl = "%1.50.%2" },
@@ -109,7 +110,8 @@ function util:getScala2DownloadUrl(version)
         linkId = "link%-main%-windows"
     end
 
-    local downloadUrl = resp.body:match('id="#' .. linkId .. '" href="([^"]+)"')
+    local downloadUrl = resp.body:match('id="#?' .. linkId .. '"[^>]-href="([^"]+)"')
+        or resp.body:match('href="([^"]+)"[^>]-id="#?' .. linkId .. '"')
     if downloadUrl == nil then
         error("failed to find Scala archive URL for " .. version)
     end
