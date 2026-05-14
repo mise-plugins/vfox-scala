@@ -16,17 +16,15 @@ function PLUGIN:Available(ctx)
     local htmlContent = [[]] .. htmlBody .. [[]]
     local versions = {}
 
-    for version in htmlContent:gmatch('<a href="/download/([^"]-)%.html">Scala [^<]-</a>') do
-        if not version:find("develop", 1, true) then
+    for version in htmlContent:gmatch('<a href="/download/([^"]-)%.html">Scala%s+[^<]-</a>') do
+        if util:isVersion(version) then
             table.insert(versions, version)
         end
     end
 
-    util:sort_versions(versions)
-
     local result = {}
-    for i = #versions, 1, -1 do
-        table.insert(result, { version = versions[i], note = "" })
+    for _, version in ipairs(versions) do
+        table.insert(result, { version = version, note = "" })
     end
 
     return result
