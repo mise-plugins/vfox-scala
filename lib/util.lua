@@ -86,6 +86,11 @@ function util:sort_versions(versions)
     end)
 end
 
+function util:findDownloadUrl(body, linkId)
+    return body:match('id="#?' .. linkId .. '"[^>]-href="([^"]+)"')
+        or body:match('href="([^"]+)"[^>]-id="#?' .. linkId .. '"')
+end
+
 function util:getArchiveSuffix()
     local suffixType = ""
     if RUNTIME.osType == "windows" then
@@ -110,8 +115,10 @@ function util:getScala2DownloadUrl(version)
         linkId = "link%-main%-windows"
     end
 
-    local downloadUrl = resp.body:match('id="#?' .. linkId .. '"[^>]-href="([^"]+)"')
-        or resp.body:match('href="([^"]+)"[^>]-id="#?' .. linkId .. '"')
+    local downloadUrl = util:findDownloadUrl(resp.body, linkId)
+    if downloadUrl == nil and RUNTIME.osType == "windows" then
+        downloadUrl = util:findDownloadUrl(resp.body, "link%-non%-main%-sys")
+    end
     if downloadUrl == nil then
         error("failed to find Scala archive URL for " .. version)
     end
